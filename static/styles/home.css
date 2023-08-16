@@ -1,0 +1,126 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #020209;
+    position: relative;
+}
+
+img {
+    width: 200px;
+    height: 300px;
+}
+
+.nav {
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(to bottom, rgb(33, 65, 159), #11182791);
+    color: rgb(255, 255, 255);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    width: 100%;
+    z-index: 2;
+}
+
+h1 {
+    display: inherit;
+}
+
+#cards {
+    position: absolute;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 10px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.card {
+    margin-left: 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 380px;
+    width: 200px;
+    border-radius: 2px;
+    outline: 1px solid rgb(4, 68, 74);
+    background-size: 200px 280px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    transition: transform 0.2s ease-in;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    z-index: 5;
+}
+
+.card::after {
+    font-family: Montserrat, sans-serif;
+    position: absolute;
+    content: attr(lang);
+    background-color: #ffffff;
+    color: #111827;
+    text-transform: uppercase;
+    padding: 3px;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 12px;
+    border-radius: 2px;
+    font-weight: 600;
+}
+
+.details {
+    display: block;
+    padding: 10px;
+    padding-top: 0;
+    height: 80px;
+    background-image: linear-gradient(to bottom, #1a1a43, #0c0c1c);
+}
+.details::after {
+    font-family: Montserrat, sans-serif;
+    position: absolute;
+    content: attr(count);
+    background-color:#28c2bd;
+    color: #f4f4f5;
+    text-transform: uppercase;
+    padding: 4px;
+    margin-top: -90px;
+    font-size: 12px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+p {
+    color: white;
+    font-family: Montserrat, sans-serif;
+}
+
+.name p {
+    font-size: 12px;
+    font-weight: 600;
+
+}
+
+.second {
+    position: relative;
+    display: flex;
+    justify-content: left;
+    font-size: 12px;
+}
+
+.second p {
+    margin: 5px;
+}
+
+#dot {
+    display: block;
+    height: 3px;
+    width: 3px;
+    background-color: rgb(176, 176, 176);
+    /* justify-content: center; */
+    /* align-items: center; */
+    margin-top: 10px;
+}

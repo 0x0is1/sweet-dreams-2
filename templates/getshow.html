@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Player</title>
+        <link rel="stylesheet" href="https://cdn.plyr.io/1.8.2/plyr.css">
+        <script src="https://cdn.plyr.io/1.8.2/plyr.js"></script>
+        <script src="https://cdn.jsdelivr.net/hls.js/latest/hls.js"></script>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/getshow.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/bvselect.css') }}">
+        <script src = "{{ url_for('static',filename='javascript/bvselect.js') }}"></script>
+    </head>
+
+  <body>
+      <div class="nav">
+          <h1>SunGlasses</h1>
+      </div>
+      <span class="screen">
+        <div class="side-pane">
+            <select id="selectbox" onchange="selectChanged(this)">
+                <option value="##" data-separator="true" selected>Select Season</option>
+            </select>
+            <script>
+
+            let list = JSON.parse('{{ show_detail | tojson | safe }}');
+                // setting season list
+                list.forEach(data => {
+                    let opt = document.getElementById("selectbox");
+                    let opt_box = document.createElement("option");
+                    opt_box.setAttribute("data-icon", `https://anime-world.in/${data.featured}`);
+                    opt_box.setAttribute("value", list.indexOf(data));
+                    if (data.name.length < 1) {
+                        opt_box.innerText = data.series.post_title;
+                    }
+                    else {
+                        opt_box.innerText = data.name;
+                    }
+                    opt.appendChild(opt_box);
+                    // console.log(data);
+                });
+                window.selectChanged = (elem) => {
+                    let series_index = elem.value;
+                    let container = document.getElementById("container");
+                    container.innerHTML = null;
+                    list[series_index].episodes.all.reverse().forEach(ep_data => {
+                        let ep_container = document.createElement("div");
+                        ep_container.className = "episode-container";
+                        ep_container.setAttribute("onclick", `set_episode(${ep_data.id})`);
+                        let ep_count_node = document.createElement("span");
+                        ep_count_node.className = "ep-count";
+                        ep_count_node.innerText = ep_data.metadata.number;
+                        let name_node = document.createElement("span");
+                        name_node.className = "ep-name";
+                        name_node.innerText = ep_data.title;
+                        ep_container.appendChild(ep_count_node);
+                        ep_container.appendChild(name_node);
+                        container.appendChild(ep_container);
+                    });
+                }
+
+                // adding event listener to episode containers
+                window.set_episode = (e_id) => {
+                    function resp(){
+                        let stream_url = JSON.parse(this.responseText).internal_stream_players[0].url;
+                        var video = document.querySelector('#player');
+
+                        if (Hls.isSupported()) {
+                            var hls = new Hls();
+                            hls.loadSource(stream_url);
+                            hls.attachMedia(video);
+                            hls.on(Hls.Events.MANIFEST_PARSED,function() {
+                            video.play();
+                            });
+                        }
+                    
+                        plyr.setup(video);
+                    }
+                    let xhr = new XMLHttpRequest();
+                    xhr.addEventListener("load", resp);
+                    xhr.open("GET", `/fetchep?gep_id=${e_id}`);
+                    xhr.send();
+                }
+            </script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    let selector = new BVSelect({
+                        selector: "#selectbox",
+                        width: "90%",
+                        searchbox: true,
+                        offset: true,
+                        placeholder: "Select Option",
+                        search_placeholder: "Search...",
+                        search_autofocus: true,
+                        breakpoint: 450
+                    });
+                });
+            </script>
+            <div id="container"></div>
+
+        </div>
+        <div class="video-pane">
+            <video preload="none" id="player" autoplay controls crossorigin></video>
+        </div>
+    </span>
+
+  </body>
+</html>
