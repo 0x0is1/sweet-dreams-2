@@ -42,6 +42,7 @@ body {
 .video-pane {
   width: 1000px;
   aspect-ratio: 2;
+  overflow-y: scroll;
 }
 
 .episode-container {
@@ -74,4 +75,47 @@ body {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: large;
   font-weight: 600;
+}
+
+h2 {
+  overflow: hidden;
+  width: 990px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  color: #ffffff;
+  padding: 7px;
+  border-bottom: 4px solid #cdf8ae;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.player-options {
+  display: grid;
+  position: relative;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.player-options .option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: medium;
+  font-weight: 600;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  padding: 7px;
+  color: #10102a;
+  background-color: aliceblue;
+  border: 2px solid rgb(193, 192, 190);
+  border-radius: 5px;
+  margin: 10px;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#download-players, #internal-players, #external-players, video {
+  display: none;
 }

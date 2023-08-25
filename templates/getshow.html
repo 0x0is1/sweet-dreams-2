@@ -27,7 +27,6 @@
                 list.forEach(data => {
                     let opt = document.getElementById("selectbox");
                     let opt_box = document.createElement("option");
-                    opt_box.setAttribute("data-icon", `https://anime-world.in/${data.featured}`);
                     opt_box.setAttribute("value", list.indexOf(data));
                     if (data.name.length < 1) {
                         opt_box.innerText = data.series.post_title;
@@ -60,8 +59,7 @@
 
                 // adding event listener to episode containers
                 window.set_episode = (e_id) => {
-                    function resp(){
-                        let stream_url = JSON.parse(this.responseText).internal_stream_players[0].url;
+                    function setPlayer(stream_url) {
                         var video = document.querySelector('#player');
 
                         if (Hls.isSupported()) {
@@ -74,12 +72,72 @@
                         }
                     
                         plyr.setup(video);
+                    }                        
+                    
+                    function resp(data){
+                        let res = JSON.parse(data);
+
+                        // embed internal players
+                        let elem = document.getElementById("internal-players")
+                        .getElementsByClassName("player-options")[0];
+                        elem.innerHTML = null;
+                        if(res.internal_stream_players.length > 0){
+                            document.getElementsByTagName("video")[0].style.display = "block";
+                            document.getElementById("internal-players").style.display = "block";
+                            res.internal_stream_players.forEach(player => {
+                                let option_node = document.createElement("span");
+                                option_node.className = "option";
+                                option_node.innerText = `${player.language} (${player.quality}) [${player.server}]`;
+                                option_node.addEventListener("click", ev => setPlayer(player.url));
+                                elem.appendChild(option_node);
+                            });
+                        }
+
+                        // embed external players
+                        elem = document.getElementById("external-players")
+                        .getElementsByClassName("player-options")[0];
+                        elem.innerHTML = null;
+                        if(res.external_stream_players.length > 0){
+                            document.getElementById("external-players").style.display = "block";
+                            res.external_stream_players.forEach(player => {
+                                let option_node = document.createElement("a");
+                                option_node.className = "option";
+                                option_node.setAttribute("href", player.url);
+                                option_node.setAttribute("target", "_blank");
+                                option_node.innerText = `${player.language} (${player.quality}) [${player.server}]`;
+                                elem.appendChild(option_node);
+                            });
+                        }
+
+                        // embed downloads
+                        elem = document.getElementById("download-players")
+                        .getElementsByClassName("player-options")[0];
+                        elem.innerHTML = null;
+                        if(res.download_players.length > 0){
+                            document.getElementById("download-players").style.display = "block";
+                            res.download_players.forEach(player => {
+                                let option_node = document.createElement("a");
+                                option_node.className = "option";
+                                option_node.setAttribute("href", player.url);
+                                option_node.setAttribute("target", "_blank");
+                                option_node.innerText = `${player.language} (${player.quality}) [${player.server}]`;
+                                elem.appendChild(option_node);
+                            });
+                        }
+
                     }
+                    
                     let xhr = new XMLHttpRequest();
-                    xhr.addEventListener("load", resp);
-                    xhr.open("GET", `/fetchep?gep_id=${e_id}`);
+                    xhr.onreadystatechange = () => {
+                        if (xhr.readyState == XMLHttpRequest.DONE){
+                            resp(xhr.responseText);
+                        }
+                    };
+                    xhr.open("GET", `/fetchep?gep_id=${e_id}`, true);
                     xhr.send();
                 }
+            
+            
             </script>
             <script>
                 document.addEventListener("DOMContentLoaded", function() {
@@ -96,10 +154,25 @@
                 });
             </script>
             <div id="container"></div>
-
         </div>
         <div class="video-pane">
             <video preload="none" id="player" autoplay controls crossorigin></video>
+            <div class="ep-details">
+                <span class="players-container">
+                    <div id="internal-players">
+                        <h2>Internal Players</h2>
+                        <div class="player-options"></div>
+                    </div>
+                    <div id="external-players">
+                        <h2>External Players</h2>
+                        <div class="player-options"></div>
+                    </div>
+                    <div id="download-players">
+                        <h2>Downloads</h2>
+                        <div class="player-options"></div>
+                    </div>
+                </span>
+            </div>
         </div>
     </span>
 
