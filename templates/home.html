@@ -36,5 +36,20 @@
             });
         });
     </script>
+    <div class="pagination">
+        <div id="prev">Previous</div>
+        <div id="next">Next</div>
+    </div>
+    <script>
+        let pno =  parseInt('{{ page }}');
+        document.getElementById("prev").addEventListener("click", () => {
+            if(pno > 1){
+                window.location.href = `?page=${pno - 1}`;
+            }
+        });
+        document.getElementById("next").addEventListener("click", () => {
+            window.location.href = `?page=${pno + 1}`;
+        });
+    </script>
 </body>
 </html>

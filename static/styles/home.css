@@ -30,8 +30,6 @@ h1 {
 }
 
 #cards {
-    position: absolute;
-    margin-top: 50px;
     margin-bottom: 50px;
     margin-left: 10px;
     display: grid;
@@ -123,4 +121,22 @@ p {
     /* justify-content: center; */
     /* align-items: center; */
     margin-top: 10px;
+}
+
+.pagination {
+    margin: 20px;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+#prev, #next {
+    display: block;
+    padding: 20px;
+    font-size: larger;
+    border-radius: 2px;
+    outline: 1px solid rgb(4, 68, 74);
+    color: #ffffff;
+    cursor: pointer;
 }

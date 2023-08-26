@@ -8,7 +8,7 @@ class SDParser:
         self.all_sub_url = '/a-z-list/page/'
         # self.episode_sub_url = '/wp-json/kiranime/v1/episode/animeSeason?anime_id='
         self.episode_sub_url = '/wp-json/kiranime/v1/episode?id='
-        self.mystream_url = 'https://awstream.net/m3u8/{ep_id}/master.txt?s=1&cache=1'
+        self.mystream_url = 'https://beta.awstream.net/m3u8/{ep_id}/master.txt?s=1&cache=1'
 
     def get_list_all(self, page_no=1):
         container = {
