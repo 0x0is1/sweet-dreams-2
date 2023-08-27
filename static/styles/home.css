@@ -3,15 +3,19 @@ body {
     padding: 0;
     background-color: #020209;
     position: relative;
+    font-size: 16px;
 }
 
 img {
-    width: 200px;
-    height: 300px;
+    width: 100%;
+    height: auto;
 }
 
 .nav {
     position: fixed;
+    top: 0; /* Stick the navigation bar to the top */
+    left: 0;
+    right: 0;
     margin: 0;
     padding: 0;
     background-image: linear-gradient(to bottom, rgb(33, 65, 159), #11182791);
@@ -20,29 +24,35 @@ img {
     height: 50px;
     display: flex;
     align-items: center;
-    padding-left: 10px;
+    padding: 10px;
     width: 100%;
     z-index: 2;
+    display: flex;
+    justify-content: space-between;
 }
 
 h1 {
     display: inherit;
+    font-size: 24px;
 }
 
 #cards {
+    margin-top: 60px; /* Adjust margin to make space for the navigation bar */
     margin-bottom: 50px;
-    margin-left: 10px;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    justify-items: center;
 }
 
 .card {
-    margin-left: 20px;
     margin-top: 20px;
     display: flex;
     flex-direction: column;
     height: 380px;
-    width: 200px;
+    width: 100%;
+    max-width: 200px;
     border-radius: 2px;
     outline: 1px solid rgb(4, 68, 74);
     background-size: 200px 280px;
@@ -72,41 +82,44 @@ h1 {
 }
 
 .details {
+    position: relative;
     display: block;
     padding: 10px;
     padding-top: 0;
-    height: 80px;
+    height: auto;
     background-image: linear-gradient(to bottom, #1a1a43, #0c0c1c);
+    font-size: 14px;
 }
+
 .details::after {
     font-family: Montserrat, sans-serif;
     position: absolute;
     content: attr(count);
-    background-color:#28c2bd;
+    background-color: #28c2bd;
     color: #f4f4f5;
     text-transform: uppercase;
     padding: 4px;
-    margin-top: -90px;
+    margin-top: -20px;
     font-size: 12px;
     border-radius: 4px;
     font-weight: 600;
 }
+
 p {
     color: white;
     font-family: Montserrat, sans-serif;
 }
 
 .name p {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
-
 }
 
 .second {
     position: relative;
     display: flex;
     justify-content: left;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .second p {
@@ -118,23 +131,20 @@ p {
     height: 3px;
     width: 3px;
     background-color: rgb(176, 176, 176);
-    /* justify-content: center; */
-    /* align-items: center; */
     margin-top: 10px;
 }
 
 .pagination {
     margin: 20px;
     display: flex;
-    position: relative;
     justify-content: center;
     align-items: center;
 }
 
 #prev, #next {
     display: block;
-    padding: 20px;
-    font-size: larger;
+    padding: 10px 20px;
+    font-size: 16px;
     border-radius: 2px;
     outline: 1px solid rgb(4, 68, 74);
     color: #ffffff;
