@@ -8,11 +8,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    page = 1
-    try:
-        page = request.args.get('page')
-    except Exception:
-        page = 1
+    page = request.args.get('page', default=1)
     show_list = parser.get_list_all(page)
     return render_template("home.html", show_list=show_list, page=page)
 
