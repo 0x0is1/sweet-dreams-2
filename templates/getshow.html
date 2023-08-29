@@ -21,8 +21,8 @@
                 <option value="##" data-separator="true" selected>Select Season</option>
             </select>
             <script>
-
-            let list = JSON.parse('{{ show_detail | tojson | safe }}');
+            const data = '{{ show_detail | tojson | safe }}'.replace(/\r\n/g, '')
+            let list = JSON.parse(data);
                 // setting season list
                 list.forEach(data => {
                     let opt = document.getElementById("selectbox");
@@ -136,7 +136,7 @@
                     xhr.open("GET", `/fetchep?gep_id=${e_id}`, true);
                     xhr.send();
                 }
-            
+
             
             </script>
             <script>

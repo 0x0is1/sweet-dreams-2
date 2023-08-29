@@ -60,7 +60,7 @@ class SDParser:
         response = requests.get(link)
         soup = BeautifulSoup(response.content, 'html.parser')
         raw_data = soup.find('section', {'class': 'flex-auto w-full'}).find('script')
-        return json.loads(raw_data.text.split(' = ')[1].split(';\r\n')[0].replace("\r\n", "").replace('\\"', '\\\\\\"'))
+        return json.loads(raw_data.text.split(' = ')[1].split(';\r\n')[0].replace('\\"', '\\\\\\"'))
 
     def fetch_episode(self, episode_id):
         url = f'{self.BASE_URL}{self.episode_sub_url}{episode_id}'
