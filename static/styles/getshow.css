@@ -142,6 +142,7 @@ a {
   .side-pane {
     width: 99%;
     overflow-y: unset;
+    aspect-ratio: unset;
   }
 
   .bv_atual .bv_background {
