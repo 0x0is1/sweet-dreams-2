@@ -119,3 +119,45 @@ a {
 #download-players, #internal-players, #external-players, video {
   display: none;
 }
+
+@media (max-width: 768px) and (min-width: 320px) {
+  .screen {
+    flex-direction: column-reverse;
+  }
+
+  .video-pane {
+    width: unset;
+    overflow-y: unset;
+  }
+
+  .side-pane, .video-pane {
+    outline: unset;
+    overflow: unset;
+  }
+
+  h2 {
+    width: unset;
+  }
+
+  .side-pane {
+    width: 99%;
+    overflow-y: unset;
+  }
+
+  .bv_atual .bv_background {
+    width: 98%;
+  }
+
+  .bv_mainselect {
+    width: 100%;
+  }
+  
+  .ep-name {
+    width: unset;
+  }
+
+  .episode-container {
+    width: unset;
+  }
+
+}
