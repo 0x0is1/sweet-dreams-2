@@ -115,7 +115,7 @@ a {
   cursor: pointer;
 }
 
-#download-players, #internal-players, #external-players, video {
+video {
   display: none;
 }
 
