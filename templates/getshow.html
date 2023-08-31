@@ -114,13 +114,14 @@
                     window.ep_res = JSON.parse(data);
                     
                     // embed show details
-                    let elem = document.getElementsByClassName("episode-container")[0];
+                    let elem = ep_elem;
                     document.getElementById("ep-title").innerText = elem.getAttribute("title");
                     document.getElementById("ep-description").innerText = elem.getAttribute("description");
                     document.getElementById("ep-published").innerText = elem.getAttribute("published");
 
                     // embed player selector
                     let opt = document.getElementById("selectbox-ptype");
+                    opt.innerText = null;
                     Object.keys(window.ep_res).forEach(element => {  
                         let opt_box = document.createElement("option");
                         opt_box.setAttribute("value", element);
@@ -156,7 +157,7 @@
 
                     window.selectorPlayer = new BVSelect({
                         selector: "#selectbox-ptype",
-                        width: "90%",
+                        width: "50%",
                         searchbox: true,
                         offset: true,
                         placeholder: "Select Option",
@@ -167,7 +168,7 @@
 
                     window.selectorServer = new BVSelect({
                         selector: "#selectbox-svtype",
-                        width: "90%",
+                        width: "50%",
                         searchbox: true,
                         offset: true,
                         placeholder: "Select Option",
