@@ -94,6 +94,8 @@
             }
             // adding event listener to episode containers
             window.set_episode = (ep_elem, e_id) => {
+                [...document.getElementsByClassName("active")].forEach(elem => elem.classList.toggle("active"));
+                ep_elem.classList.toggle("active");
                 window.setPlayer = (stream_url) => {
                     var video = document.querySelector('#player');
 
@@ -116,7 +118,7 @@
                     // embed show details
                     let elem = ep_elem;
                     document.getElementById("ep-title").innerText = elem.getAttribute("title");
-                    document.getElementById("ep-description").innerText = elem.getAttribute("description");
+                    document.getElementById("ep-description").innerHTML = elem.getAttribute("description");
                     document.getElementById("ep-published").innerText = elem.getAttribute("published");
 
                     // embed player selector
@@ -157,7 +159,7 @@
 
                     window.selectorPlayer = new BVSelect({
                         selector: "#selectbox-ptype",
-                        width: "50%",
+                        width: "80%",
                         searchbox: true,
                         offset: true,
                         placeholder: "Select Option",
@@ -168,7 +170,7 @@
 
                     window.selectorServer = new BVSelect({
                         selector: "#selectbox-svtype",
-                        width: "50%",
+                        width: "80%",
                         searchbox: true,
                         offset: true,
                         placeholder: "Select Option",
