@@ -10,6 +10,24 @@
     <div class="nav">
         <h1>SunGlasses</h1>
     </div>
+    <div id="loading" class="loading">
+        Loading&#8230;
+    </div>
+    <script>
+        var loadingDiv = document.getElementById('loading');
+
+        window.showSpinner = function() {
+            loadingDiv.style.visibility = 'visible';
+        }
+
+        window.hideSpinner = function() {
+            loadingDiv.style.visibility = 'hidden';
+        }
+ 
+        window.showSpinner();
+        window.onload = () => window.hideSpinner();
+    </script>
+
     <div id="cards"></div>
     <script>
         let list = JSON.parse('{{ show_list | tojson | safe }}');
@@ -32,6 +50,7 @@
             `;
             document.getElementById("cards").appendChild(card_node);
             card_node.addEventListener("click", (event)=>{
+                window.showSpinner();
                 window.location.href = `/getshow?url=${encodeURIComponent(data.link)}`;
             });
         });

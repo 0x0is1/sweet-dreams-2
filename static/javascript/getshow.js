@@ -1,4 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
+    var loadingDiv = document.getElementById('loading');
+
+    window.showSpinner = function () {
+        loadingDiv.style.visibility = 'visible';
+    }
+
+    window.hideSpinner = function () {
+        loadingDiv.style.visibility = 'hidden';
+    }
+
+    window.showSpinner();
+
     const data = window.seasonData;
     let list = JSON.parse(data);
 
@@ -63,6 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const play_url = elem.value;
         const playeble = JSON.parse(elem.getElementsByTagName("option")[0].getAttribute("playable"));
         if (playeble) {
+            window.showSpinner();
             setPlayer(play_url);
         }
         else {
@@ -78,27 +91,31 @@ document.addEventListener("DOMContentLoaded", function () {
         } catch (error) {
             console.log(error);
         }
+        window.hideSpinner();
     }
 
     // adding event listener to episode containers
-    window.set_episode = (ep_elem, e_id) => {
-        [...document.getElementsByClassName("active")].forEach(elem => elem.classList.toggle("active"));
-        ep_elem.classList.toggle("active");
-        window.setPlayer = (stream_url) => {
-            var video = document.querySelector('#player');
+    window.setPlayer = (stream_url) => {
+        var video = document.querySelector('#player');
 
-            if (window.Hls.isSupported()) {
-                var hls = new Hls();
-                hls.loadSource(stream_url);
-                hls.attachMedia(video);
-                hls.on(window.Hls.Events.MANIFEST_PARSED, function () {
-                    video.play();
-                });
-            }
-
-            plyr.setup(video);
+        if (window.Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource(stream_url);
+            hls.attachMedia(video);
+            hls.on(window.Hls.Events.MANIFEST_PARSED, function () {
+                window.hideSpinner();
+                video.play();
+            });
         }
 
+        plyr.setup(video);
+    }
+    window.set_episode = (ep_elem, e_id) => {
+        document.getElementsByTagName("video")[0].pause();
+        window.showSpinner();
+        [...document.getElementsByClassName("active")].forEach(elem => elem.classList.toggle("active"));
+        ep_elem.classList.toggle("active");
+        
         function resp(data) {
             document.getElementsByTagName("video")[0].style.display = "block";
             window.ep_res = JSON.parse(data);
