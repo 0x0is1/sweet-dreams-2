@@ -69,6 +69,17 @@ document.addEventListener("DOMContentLoaded", function () {
             window.open(play_url, "_blank");
         }
     }
+
+    window.setDefaultEpisode = () => {
+        try {            
+            document.getElementsByClassName('bv_ul_inner')[1].children[3].click();
+            document.getElementsByClassName('bv_ul_inner')[2].children[1].click();
+            document.body.scrollTop = 0;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     // adding event listener to episode containers
     window.set_episode = (ep_elem, e_id) => {
         [...document.getElementsByClassName("active")].forEach(elem => elem.classList.toggle("active"));
@@ -76,11 +87,11 @@ document.addEventListener("DOMContentLoaded", function () {
         window.setPlayer = (stream_url) => {
             var video = document.querySelector('#player');
 
-            if (Hls.isSupported()) {
+            if (window.Hls.isSupported()) {
                 var hls = new Hls();
                 hls.loadSource(stream_url);
                 hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                hls.on(window.Hls.Events.MANIFEST_PARSED, function () {
                     video.play();
                 });
             }
@@ -108,6 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 opt.appendChild(opt_box);
             });
             window.selectorPlayer.Update();
+            window.setDefaultEpisode();
         }
 
         let xhr = new XMLHttpRequest();
@@ -152,4 +164,13 @@ document.addEventListener("DOMContentLoaded", function () {
         search_autofocus: true,
         breakpoint: 450
     });
+    window.select_default_ep = () => {
+        try {
+            document.getElementsByClassName('bv_ul_inner')[0].children[2].click();
+            document.getElementsByClassName('episode-container')[0].click();
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    window.select_default_ep();
 });
