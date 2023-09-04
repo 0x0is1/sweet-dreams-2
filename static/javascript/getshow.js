@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var lastPlayed = parseFloat(window.localStorage.getItem("lastPlayed")) || 0.0;
             document.getElementsByClassName('bv_ul_inner')[1].children[3].click();
             document.getElementsByClassName('bv_ul_inner')[2].children[lastPlayer].click();
-            document.getElementsByTagName("video")[0].addEventListener("durationchange", ev => { ev.target.currentTime = lastPlayed }, false);
+            // document.getElementsByTagName("video")[0].addEventListener("durationchange", ev => { ev.target.currentTime = lastPlayed }, false);
         } catch (error) {
             console.log(error);
         }
