@@ -84,10 +84,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     window.setDefaultEpisode = () => {
-        try {            
+        try {
+            var lastPlayer = parseInt(window.localStorage.getItem("lastPlayer"));
+            lastPlayer = lastPlayer === -1 ? 1 : lastPlayer;
+            var lastPlayed = parseFloat(window.localStorage.getItem("lastPlayed")) || 0.0;
             document.getElementsByClassName('bv_ul_inner')[1].children[3].click();
-            document.getElementsByClassName('bv_ul_inner')[2].children[1].click();
-            document.body.scrollTop = 0;
+            document.getElementsByClassName('bv_ul_inner')[2].children[lastPlayer].click();
+            document.getElementsByTagName("video")[0].addEventListener("durationchange", ev => { ev.target.currentTime = lastPlayed }, false);
         } catch (error) {
             console.log(error);
         }
@@ -96,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // adding event listener to episode containers
     window.setPlayer = (stream_url) => {
-        var video = document.querySelector('#player');
+        var video = document.getElementById('player');
 
         if (window.Hls.isSupported()) {
             var hls = new Hls();
@@ -183,11 +186,26 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     window.select_default_ep = () => {
         try {
-            document.getElementsByClassName('bv_ul_inner')[0].children[2].click();
-            document.getElementsByClassName('episode-container')[0].click();
+            var lastSeason = parseInt(window.localStorage.getItem("lastSeason"));
+            lastSeason = lastSeason === -1 ? 0 : lastSeason;
+            var lastEpisode = parseInt(window.localStorage.getItem("lastEpisode"));
+            lastEpisode = lastEpisode === -1 ? 0 : lastEpisode;
+            document.getElementsByClassName('bv_ul_inner')[0].children[lastSeason + 2].click();
+            document.getElementsByClassName('episode-container')[lastEpisode].click();
         } catch (e) {
             console.log(e);
         }
     }
     window.select_default_ep();
+
+    setInterval(() => {
+        let lastPlayed = document.getElementsByTagName("video")[0].currentTime;
+        let lastSeason = document.getElementsByTagName("select")[0].options.selectedIndex-1;
+        let lastEpisode = [...document.getElementsByClassName("episode-container")].indexOf(document.getElementsByClassName("active")[0]);
+        let lastPlayer = document.getElementsByTagName("select")[2].options.selectedIndex-1;
+        window.localStorage.setItem("lastSeason", lastSeason);
+        window.localStorage.setItem("lastEpisode", lastEpisode);
+        window.localStorage.setItem("lastPlayer", lastPlayer);
+        window.localStorage.setItem("lastPlayed", lastPlayed);
+    }, 6000);
 });
