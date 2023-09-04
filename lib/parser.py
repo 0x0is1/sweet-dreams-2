@@ -1,10 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import base64
 
 class SDParser:
     def __init__(self):
-        self.BASE_URL = 'https://anime-world.in'
+        self.BASE_URL = base64.b64decode('aHR0cHM6Ly9hbmltZS13b3JsZC5pbg==').decode('utf-8')
         self.all_sub_url = '/a-z-list/page/'
         # self.episode_sub_url = '/wp-json/kiranime/v1/episode/animeSeason?anime_id='
         self.episode_sub_url = '/wp-json/kiranime/v1/episode?id='
